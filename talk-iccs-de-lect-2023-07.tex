@@ -1,4 +1,4 @@
-\documentclass[10pt, draft]{beamer}
+\documentclass[10pt]{beamer}
 
 \usepackage{iftex,ifxetex}
 \ifPDFTeX
@@ -33,8 +33,11 @@
 \usepackage{multicol}
 \usepackage{anyfontsize}
 \usepackage{minted}
+\usepackage{tikz}
+\usepackage{indentfirst}
 %\usepackage{enumitem}
 
+\usetikzlibrary{matrix}
 % \setlist[description]{leftmargin=0pt,labelindent=\parindent}
 
 \usemintedstyle{tango}
@@ -97,7 +100,41 @@
 % Контактная информация
 
 
+  \tikzset{
+    table/.style={
+        matrix of nodes,
+        row sep=-\pgflinewidth,
+        column sep=-\pgflinewidth,
+        nodes={
+            rectangle,
+            draw=black,
+            align=center
+        },
+        minimum height=1.5em,
+        text depth=0.5ex,
+        text height=2ex,
+        nodes in empty cells,
+%%
+        every even row/.style={
+            nodes={fill=gray!20}
+        },
+        column 1/.style={
+ %           nodes={text width=2em,font=\bfseries}
+            nodes={font=\bfseries}
+        },
+        row 1/.style={
+            nodes={
+                % fill=black,
+                % text=white,
+                font=\bfseries
+            }
+        }
+    }
+}
+
+
 \begin{document}
+\setlength{\parindent}{1em}
 \title{Механизмы искусственного интеллекта}
 
 \author{Е.~А.~Черкашин}
@@ -115,12 +152,39 @@
   \includegraphics[width=0.7\linewidth]{pics/qrcode.eps}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{К определению понятия <<Искусственный интеллект>>}
+
+  К ИИ относятся программы, реализующие задачи, решение которых потребовало бы от человека использования его \emph{когнитивных способностей}, выполнения \emph{творческих функций}\footnote{Справочник ИИ, Т.1, 1990}.
+
+  \vspace{1em}
+
+  Определение из книги AIMA\footnote{P.Norvig, S.Russell. Artificial Intelligence Modern Approach}:
+  \begin{center}
+    \begin{tikzpicture}
+      \matrix (first) [table,text width=6em]
+      {
+        &\!Рационально & Как человек \\
+        Рассуждать   & \bigcirc & \bigcirc \\
+        Вести себя   & \bigcirc & \bigcirc \\
+      };
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}
+  \frametitle{Тест Тьюринга}
+  \begin{center}
+    \includegraphics[width=0.9\linewidth]{pics/turing-test.png}
+  \end{center}
+
+  Если Человек в процессе общения с ИИ будет думать, что общается с человеком, то ИИ обладает искомым свойством.
+\end{frame}
+
+
+\begin{frame}
   \frametitle{ИИ как модель человека}
+
   \textbf{ИИ как математическая модель}
 \end{frame}
 
