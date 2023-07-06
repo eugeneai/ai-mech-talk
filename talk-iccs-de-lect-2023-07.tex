@@ -826,6 +826,56 @@ main:
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile,fragile]
+  \frametitle{Разбор предложения на Prolog}
+  \begin{columns}
+  \begin{column}{0.5\textwidth}
+\begin{minted}{prolog}
+% <sent> ::== <noun group> <verb group>
+% <noun group> ::== <det> <noun>
+% <verb group> ::== <verb> <noun group>
+% <det> ::== a | the | my | yours | its
+% <noun> ::== cow | tail | body
+% <verb> ::== walks | shakes | moves
+
+% ?- t(sent, [a,cow,shakes,its,tail], [], Tree).
+
+noun(cow). noun(tail). noun(body).
+%noun(X):-member(X,[cow, tail, body]).
+det(X):-member(X,[a, the, my, yours, its]).
+verb(X):-member(X,[walks, shakes, moves]).
+
+t(sent, I, O, sent(NG,VG)):-
+    t(ng, I, R, NG),
+    t(vg, R, O, VG).
+t(ng, I, O, ng(Det,N)):-
+    t(det,I,R, Det),
+    t(noun,R,O,N).
+t(vg, I, O, vg(V,NG)):-
+    t(verb, I,R, V),
+    t(ng, R,O, NG).
+t(det, [X|I],I, det(X)):-
+    det(X).
+t(verb,[X|I],I, verb(X)):-
+    verb(X).
+t(noun, [X|I],I, noun(X)):-
+    noun(X).
+\end{minted}
+\begin{minted}{text}
+?- [lp].
+true.
+
+?- t(sent, [a,cow,shakes,its,tail], [], T).
+T = sent(ng(det(a), noun(cow)), vg(verb(shakes),
+         ng(det(its), noun(tail)))) ;
+false.
+\end{minted}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \includegraphics[width=1\linewidth]{pics/cow-its-tail.png}
+  \end{column}
+\end{columns}
+\end{frame}
 
 \begin{frame}
   \frametitle{Linked grammar (грамматики связей)}
@@ -1136,13 +1186,44 @@ true.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Chat GPT}
-  ChatGPT (Generative Pretrained Transformer, Порождающий [пред]треннированный Трансформатор) -- чат-бот OpenAI, запущенный в ноябре 2022.
+  \frametitle{Chat GPT 4}
+  ChatGPT (Generative Pretrained Transformer, Порождающий [пред]треннированный преобразователь) -- чат-бот OpenAI, запущенный в ноябре 2022.
 
-  Настроен при помощи обучения <<с учителем>> и <<с подкреплением>>.
+  \ldots настроен при помощи обучения <<с учителем>> и <<с подкреплением>>.  Именно обучение с подкреплением делает ChatGPT \textbf{уникальным}.
 
-  Предназначен для реагирования на входные данные, представленные на естественном языке.
+  \ldots предназначен для реагирования на входные данные, представленные на естественном языке.
 
+  \begin{center}
+    \includegraphics[width=0.7\linewidth]{pics/transformer-model-architecture.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Нейронные сети}
+  \begin{center}
+    \includegraphics[width=1\linewidth]{pics/nn-all.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Анализ входного текста}
+  \begin{center}
+    \includegraphics[width=1\linewidth]{pics/gpt-parsing.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Воспитание нейронной сети}
+  \begin{center}
+    \includegraphics[width=1\linewidth]{pics/ChatGPT_Diagram.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Цель воспитания}
+  \begin{center}
+    \includegraphics[width=1\linewidth]{pics/capability-versus-alignment.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}
