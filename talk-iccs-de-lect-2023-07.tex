@@ -132,6 +132,19 @@
     }
 }
 
+% \makeatletter
+% \define@key{beamerframe}{t}[true]{% top
+%   \beamer@frametopskip=.2cm plus .5\paperheight\relax%
+%   \beamer@framebottomskip=0pt plus 1fill\relax%
+%   \beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+%   \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
+%   \def\beamer@initfirstlineunskip{}%
+% }
+% \makeatother
+
+\newcommand{\Tr}{\mbox{True}}
+\newcommand{\Fa}{\mbox{False}}
+
 
 \begin{document}
 \setlength{\parindent}{1em}
@@ -141,16 +154,10 @@
 \institute[ИДСТУ СО РАН]{ИДСТУ им.~В.~М.~Матросова СО РАН}
 \date[07.2023]{{}\\[1.5cm]
 %<<>>\\
-.. июля 2023, Иркутск
+6 июля 2023, Иркутск
 }
 %\date{\today}
 \maketitle
-
-\begin{frame}
-  \frametitle{QR-код презентации}
-  \centering
-%  \includegraphics[width=0.7\linewidth]{pics/qrcode.eps}
-\end{frame}
 
 \begin{frame}[fragile]
   \frametitle{К определению понятия <<Искусственный интеллект>>}
@@ -178,34 +185,399 @@
     \includegraphics[width=0.9\linewidth]{pics/turing-test.pdf}
   \end{center}
 
-  Если Человек в процессе общения с ИИ будет думать, что общается с человеком, то ИИ обладает искомым свойством.
+  Если Человек в процессе общения с ИИ будет думать, что общается с Человеком, то ИИ обладает требуемым свойством.
 \end{frame}
 
 
 \begin{frame}
   \frametitle{ИИ как модель человека}
-
-  \textbf{ИИ как математическая модель}
+  \begin{center}
+    Модулирование рассуждений \to\ моделирование <<математики>>\\
+    \includegraphics[width=0.2\linewidth]{pics/ai-approach.pdf}\\
+    Моделирование мозга \to\ моделирование\\ самоорганизующихся систем
+  \end{center}
+%   \textbf{ИИ как математическая модель}
 \end{frame}
 
 \begin{frame}
   \frametitle{Свойства и классы задач ИИ}
+  \small
+\begin{columns}
+  \begin{column}{0.4\textwidth}
+    \textbf{Свойства задач}
+    \begin{itemize}
+    \item Не существует алгоритма решения
+    \item Обработка символьной информации
+    \item Автоматизация принятия решения
+    \item Решение -- комбинация <<возможностей>>
+    \item Обработка неполной и противоречивой информации
+    \end{itemize}
+    \vspace{6.5em}
+    \mbox{}
+  \end{column}
+  \begin{column}{0.6\textwidth}
+    \textbf{Классы задач}
+    \begin{enumerate}
+    \item Восприятие и распознавание образов
+    \item Автоматическое доказательство теорем
+    \item Игры
+    \item Планирование действий (Problem Solving)
+    \item Понимание естественного языка, перевод
+    \item Логическое программирование
+    \item Экспертные системы
+    \item Интеллектные информационные системы
+    \item Восприятие и усвоение знаний (Machine learning)
+    \item Интеллектное управление [производством] \ldots
+    \item Робототехника (Robotics)
+    \item Системы поддержки принятия решений
+    \end{enumerate}
+  \end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}
   \frametitle{Планирование действий (Problem Solving)}
+
+\begin{columns}
+  \begin{column}{0.4\textwidth}
+    \includegraphics[width=1\linewidth]{pics/boxes.png}
+  \end{column}
+  \begin{column}{0.4\textwidth}
+    \includegraphics[width=1\linewidth]{pics/boxes-state-space.png}
+  \end{column}
+\end{columns}
+\vfill
+\textbf{Формализованная постановка} ($SSG$, State Space Graph)
+\begin{itemize}
+\item Структура данных для представления \textbf{состояния}
+\item Формализация \textbf{правил перехода} из состояния в состояние $G$
+\item Программирование \textbf{распознавателя \emph{целевого состояния}} $R(v)$
+\item Задание \textbf{исходного состояния} $I$
+\end{itemize}
+\vspace{1em}
+\[
+  SSG = <G, R(v), I>, G=<V,E>, v\in V.
+\]
+\end{frame}
+
+% \begin{frame}
+%   \frametitle{Игры}
+% \end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Представление знаний}
+\small
+Естественно определить данные как некоторые сведения об отдельных объектах, а знания~-- о мире в целом.
+
+{\bf Данные} представляют информацию о существовании объектов, представляемых значениями признаков, а {\bf знания}~-- информацию о существующих в мире закономерных связях между признаками и запрещающих некоторые другие сочетания свойств у объектов.
+
+{\bf Данные}~-- это информация о существовании объектов с некоторым набором свойств, {\bf знания}~-- информация о несуществовании объектов с некоторым набором свойств.
+
+Пусть $H(x)$ $\Leftrightarrow$ <<$x$~является человеком>>, а $M(x)$~-- <<$x$~-- смертен>>. \\
+
+\noindent{}<<существует $x$, $x$ является человеком>>:
+$$
+    A_1=\exists x H(x),
+$$
+<<не существует бессмертных людей>>):
+$$
+    A_2=\neg\exists x \big ( H(x) \& \neg M(x) \big ),
+$$
+преобразуем во <<все люди смертны>>:
+$$
+    A_3=\forall x \big ( H(x)\to M(x)\big ).
+$$
+\ldots все объекты $x$, обладающие свойством $H$, будут обладать свойством $M$.
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Обработка информации <<в математике>>}
+\small
+Добавим информатики. Утверждение <<Сократ~-- человек>> представим как $H(s)$, где $s$ -- это Сократ.  Теперь из \textbf{знания} $A_3$ и \textbf{исходного данного} $H(s)$ получим новую информацию о Сократе:
+$$
+B = \Big (H(s) \& \overbrace{\forall x \big ( H(x)\to M(x)\big )}^{A_3} \Big ) \to M(s).
+$$
+
+Из того, что Сократ~-- человек и что все люди смертны, следует, что Сократ тоже смертен $M(s)$.  Доказательство <<от противного>>:
+
+\begin{enumerate}
+\item Требуется \textbf{опровергнуть высказывание} $\neg B = \Tr$
+\item $B = \Fa \vdash$ $H(s) \& A_3 = \Tr$, $M(s) = \Fa$
+\item $A_3 = \Tr \vdash H(s) = \Tr$, {\color{red}$A_3 = \Tr$} \label{pa}
+\item Подставим $s$ вместо $x$ в $A_3$, получим $H(s)\to M(s)$
+\item $H(s)= \Tr, M(s)= \Fa \vdash H(s)\to M(s) = \Fa$
+\item $H(s)\to M(s) = \Fa\vdash$ {\color{blue} $A_3 = \Fa$} \label{pb}
+\item Из п.~\ref{pa} следует {\color{red}$A_3 = \Tr$}, а из п.~\ref{pb} -- {\color{blue} $A_3 = \Fa$} \label{contr}
+\item В формальной (математической) логике в п.~\ref{contr} получено \textbf{противоречие}
+\item Следовательно, $\neg B \neq \Fa$, $B = \Tr$ \label{stmt}
+\item Из п.~\ref{stmt} следует $M(s)=\Tr$ \square\ \ \ (\textbf{ЧТД, QED\footnote{\emph{Quod Erat Demonstrandum}, <<что и требовалось показать>>, ``which was to be demonstrated``})}
+% \begin{align*}
+% 2x - 5y &=  8 \\
+% 3x + 9y &=  -12
+% \end{align*}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Логическое программирование}
+
+  \textbf{Сократим доказательство}
+
+  Будем выписывать только \textbf{истинные высказывания}, т.е.
+  $M(s) \Leftrightarrow M(s) = \Tr$ (<<Сократ смертен>>),\\
+  $\neg M(s) \Leftrightarrow M(s) = \Fa$ (<<Сократ бессмертен>>)
+
+$$
+B = \Big (H(s) \& \overbrace{\forall x \big ( H(x)\to M(x)\big )}^{A_3} \Big ) \to M(s).
+$$
+
+\begin{columns}
+  \begin{column}{0.5\textwidth}\footnotesize
+    \begin{enumerate}
+    \item \textbf{Опровергаем} $\neg B$
+    \item $B\vdash$ $H(s) \& A_3$, $M(s)$
+    \item $A_3 \vdash H(s)$, {\color{red}$A_3$} \label{pa}
+    \item $A_3\{s/x\} = H(s)\to M(s)$
+    \item $H(s), \neg M(s) \vdash \neg (H(s)\to M(s))$
+    \item $\neg(H(s)\to M(s))\vdash$ {\color{blue} $\neg A_3$} \label{pb}
+    \item Из п.~\ref{pa} следует {\color{red}$A_3$}, а из п.~\ref{pb} -- {\color{blue} $\neg A_3$} \label{contr}
+    \item В п.~\ref{contr} получено \textbf{противоречие}
+    \item Следовательно, $B$ \label{stmt}
+    \item Из п.~\ref{stmt} $M(s)$ \square
+    \end{enumerate}
+    \vspace{2.7em}
+    \mbox{}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \textbf{\footnotesize Программа (теория)}
+\begin{minted}{prolog}
+h(s).
+m(X) :- h(X).   % h(x) -> m(x).
+\end{minted}
+    \textbf{\footnotesize Консультация}
+\begin{minted}{text}
+?- [socrates].  % Загрузка теории из файла
+true.
+
+?- m(s).        % Запрос
+true.
+\end{minted}
+\textbf{\footnotesize Объяснение вывода}
+\begin{minted}{text}
+?- trace.
+true.
+
+[trace]  ?- m(s).
+   Call: (10) m(s) ?     % Запрос пользователя
+   Call: (11) h(s) ?     % Применение m(X):-h(X)
+                         % при {s/X}
+   Exit: (11) h(s) ?     % Найден факт h(s).
+   Exit: (10) m(s) ?     % следовательно m(s).
+true.
+
+[trace]  ?-
+\end{minted}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Планирование действий}
+  \begin{center}
+    \includegraphics[width=0.7\linewidth]{pics/maze.pdf}
+  \end{center}
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+  \textbf{Теория лабиринта}
+\begin{minted}{prolog}
+
+% "Данные"
+
+e(a,b). e(b,c). e(c,f).
+e(f,e). e(e,d). e(d,h).
+e(f,g). e(g,i). e(i,h).
+
+% "Знания"
+% Что такое "путь".
+
+path(A,B) :- e(A,B).
+path(A,B) :- e(A,C), path(C,B).
+
+\end{minted}
+
+  \noindent\textbf{Запрос}
+
+\begin{minted}{text}
+?- path(a,h).
+true ;
+true ;
+false.
+\end{minted}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Конструктивное решение}
+\begin{minted}{prolog}
+path(A,B, [A-B]) :- e(A,B).
+path(A,B, [A-C|T]) :- e(A,C), path(C,B,T).
+\end{minted}
+\textbf{Запрос}
+\begin{minted}{text}
+?- path(a,h,L).
+L = [a-b, b-c, c-f, f-e, e-d, d-h] ;
+L = [a-b, b-c, c-f, f-g, g-i, i-h] ;
+false.
+\end{minted}
+\vspace{4em}
+\mbox{}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Стратегии поиск в SSG}
+  \begin{center}\tiny
+    \def\svgwidth{0.8\linewidth}
+    \def\za{A}
+    \def\zb{B}
+    \def\zc{C}
+    \def\ya{a)}
+    \def\yb{b)}
+    \def\yc{c)}
+    \input{pics/searchdescr.pdf_tex}
+  \end{center}
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \textbf{Поиск в глубину}
+\begin{minted}{prolog}
+dfs(V,[]):- r(V).
+dfs(V,[V-N|T]):- \+ r(V), after(V,N), dfs(N,T).
+r(h).
+after(X,Y):- e(X,Y); e(Y,X).
+\end{minted}
+\begin{minted}{text}
+?- dfs(a, S).
+S = [a-b, b-c, c-f, f-e, e-d, d-h] ;
+S = [a-b, b-c, c-f, f-e, e-d, d-e, e-d, d-h] ;
+S = [a-b, b-c, c-f, f-e, e-d, d-e, e-d, d-e, ...]
+\end{minted}
+    %\vspace{1em}
+    \mbox{}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \textbf{Поиск в ширину}
+\begin{minted}{prolog}
+bfs([[X|T]|_],[X|T]):-r(X),!.   % (1)
+bfs([[X|T]|Ways], S):-
+    findall([Y,X|T],            % (2)
+      (after(X,Y), \+ member(Y,[X|T])),
+    L),
+    append(Ways, L, NWays),     % (3)
+    bfs(NWays, S).
+\end{minted}
+\begin{minted}{text}
+?- bfs([[a]],S).
+S = [h, d, e, f, c, b, a].
+\end{minted}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Использование дополнительной информации}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}\footnotesize
+      Зададим функцию $f\!\!:V\to R$ следующего вида:
+\begin{equation*}
+  % \label{eq:1}
+  f(x)=g(x)+r(x)
+\end{equation*}
+-- стоимость кратчайшего пути (КП) через $x$,  $g(x)$~-- до $x$, $r(x)$~-- КП до целевой вершины (не известен).
+
+Оценка $r(x)$ снизу -- $h(x)$, $h(x)\leqslant r(x)$.  Теперь
+\begin{equation*}
+  %\label{eq:2}
+  f(x)\leqslant g(x)+h(x).
+\end{equation*}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{minted}{prolog}
+bf1([_-s(G,[Target|T]) |_],% (1)
+    Target-_,s(G,[Target|T])):-!.
+bf1([_-s(G,[X|T])|Ways], Target-GPS, S):-
+    Target\=X,
+    findall(F1-s(G1,[Y,X|T]),
+      after([X|T],G,GPS, Y,G1,F1), L),
+    append(L, Ways, NWays), keysort(NWays,SNWays),
+    bf1(SNWays,Target-GPS,S).
+after([S|R],SG, GPS, T,TG, F):-
+    transdist(S,T,D), % \+ member(T,[S|R]),
+    TG is SG + D,
+    geodist(T, GPS, GDist), % (2)
+    F is TG + GDist.
+bf(Start, Target, Sol):-
+    geocode(Target, Lon, Lat, _),
+    bf1([0-s(0,[Start])],
+        Target-ll(Lon,Lat), Sol). % (3)
+\end{minted}
+    \end{column}
+  \end{columns}
+  \begin{center}
+    \includegraphics[width=0.7\linewidth]{pics/yuzd1.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Игра 15}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \includegraphics[width=1\linewidth]{pics/15-puzzle_magical.pdf}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\textbf{Поиск решения с использованием эвристики}
+\begin{minted}{text}
+center% ./15-solve 100 20 1
+Environment:
+USE_HEURISTIC=1
+Puzzle 15 solving program
+State(00,00[00])
+<---solution--->
+0 Step ------------
+ 5  1  3  4
+ 9  2  6  8
+13 10 15  0
+14 12  7 11
+x=2, y=3
+State(00,16[16])
+. . . . . .
+17 Step ------------
+ 1  2  3  4
+ 5  6  7  8
+ 9 10 11 12
+13 14 15  0
+x=3, y=3
+State(17,00[17])
+Tested 111 states.
+\end{minted}
+\textbf{Без эвристики}
+\begin{minted}{text}
+. . . . . .
+17 Step ------------
+ 1  2  3  4
+ 5  6  7  8
+ 9 10 11 12
+13 14 15  0
+x=3, y=3
+State(17,00[17])
+Tested 921299 states.
+\end{minted}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Игры}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Понимание естественного языка}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Актуальность понимания естественного языка}
+  \frametitle{Понимания естественного языка: актуальность}
   \footnotesize
   Понимание естественного языка (ЕЯ), перевод из одного ЕЯ на другой -- \textbf{Направление ИИ}. Решаются следующие задачи:
   \begin{enumerate}
@@ -232,7 +604,7 @@
 
 \begin{frame}
   \frametitle{Графический пользовательский интерфейс}
-  Специализирован на \textbf{унарных операциях над отдельными частями} информационного объекта.
+  Специализирован на \textbf{операциях над отдельными частями} информационного объекта.
   \begin{center}
     \includegraphics[width=0.4\linewidth]{pics/shot-context-menu.png}\qquad
     \includegraphics[width=0.4\linewidth]{pics/shot-replace.png}
@@ -719,14 +1091,65 @@ geobase(STR, X, E):-
 \end{minted}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Пример запуска программы Geobase}
+  \footnotesize
+\begin{minted}{text}
+Welcome to SWI-Prolog (threaded, 64 bits, version 9.0.4)
+SWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software.
+Please run ?- license. for legal details.
+
+For online help and background, visit https://www.swi-prolog.org
+For built-in help, use ?- help(Topic). or ?- apropos(Word).
+
+?- [geobase].
+true.
+
+?- loaddba.
+Loading database file - please wait
+true.
+
+?- geobase:geobase("states").
+alabama alaska arizona arkansas california
+colorado connecticut delaware florida georgia
+hawaii idaho illinois indiana iowa
+kansas kentucky louisiana maine maryland
+massachusetts michigan minnesota mississippi missouri
+montana nebraska nevada new hampshire new jersey
+new mexico new york north carolina north dakota
+ohio oklahoma oregon pennsylvania rhode island
+south carolina south dakota tennessee texas
+utah vermont virginia washington west virginia
+wisconsin wyoming
+
+50 Solutions
+true.
+
+?- geobase:geobase("which rivers run through states that border the state with the capital austin?").
+neosho washita arkansas st. francis white
+mississippi ouachita pearl red canadian
+cimarron rio grande san juan gila pecos
+
+15 Solutions
+true.
+\end{minted}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Нейроны, Нейронные сети, GAN, Chat GPT}
+  \frametitle{Chat GPT}
+  ChatGPT (Generative Pretrained Transformer, Порождающий [пред]треннированный Трансформатор) -- чат-бот OpenAI, запущенный в ноябре 2022.
+
+  Настроен при помощи обучения <<с учителем>> и <<с подкреплением>>.
+
+  Предназначен для реагирования на входные данные, представленные на естественном языке.
+
 \end{frame}
 
+\begin{frame}
+  \frametitle{QR-код презентации}
+  \centering
+%  \includegraphics[width=0.7\linewidth]{pics/qrcode.eps}
+\end{frame}
 
 \end{document}
 
