@@ -33,6 +33,8 @@ $(TARGET): $(SOURCE)
 
 clean:
 	$(LATEXMK) -C $(SOURCE)
+	rm *.vrb
+
 
 # tests: test-xelatex
 tests: test-pdflatex test-lualatex test-xelatex
